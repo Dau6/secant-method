@@ -1,0 +1,86 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+
+
+\title{Secant Method in Python}
+\author{SCT211-0583/2021 Charles Daud Balila}
+\date{}
+
+\maketitle{}
+
+\begin{document}
+
+\section{Introduction}
+
+The Secant Method is a root-finding algorithm that is used to find the roots of a function. It is similar to the Newton-Raphson Method, but instead of using the derivative of the function, it approximates the derivative using two points.
+
+In this document, we will implement the Secant Method in Python and use it to find the roots of a user-defined polynomial. We will also measure the execution time of the algorithm using the timeit module.
+
+\section{Implementation}
+
+First, we define the function for the Secant Method:
+
+\begin{lstlisting}[language=Python]
+def secant(f, x0, x1, tol=1e-6, maxiter=100):
+for i in range(maxiter):
+fx0 = f(x0)
+fx1 = f(x1)
+if abs(fx1) < tol:
+return x1
+dx = fx1 * (x1 - x0) / (fx1 - fx0)
+x0 = x1
+x1 = x1 - dx
+raise ValueError("Failed to converge")
+\end{lstlisting}
+
+The function takes four arguments: the function to find the root of (f), two initial guesses (x0 and x1), a tolerance level (tol), and a maximum number of iterations (maxiter).
+
+Inside the function, we loop through a maximum number of iterations, calculating the value of the function at each guess and using those values to approximate the derivative. We then update the guesses and continue until we find a root or exceed the maximum number of iterations.
+
+Next, we prompt the user to define a polynomial:
+
+\begin{lstlisting}[language=Python]
+poly = input("Enter a polynomial (in the form of a string): ")
+f = lambda x: eval(poly)
+\end{lstlisting}
+
+The user can enter any polynomial in the form of a string, and we use the eval() function to convert it to a Python function that can be used with the Secant Method.
+
+We then prompt the user to enter the initial guesses:
+
+\begin{lstlisting}[language=Python]
+x0 = float(input("Enter the first initial guess: "))
+x1 = float(input("Enter the second initial guess: "))
+\end{lstlisting}
+
+The user can enter any two initial guesses for the Secant Method.
+
+\newpage
+
+Finally, we measure the execution time of the Secant Method using the timeit module:
+
+\begin{lstlisting}[language=Python]
+t = timeit.timeit(lambda: secant(f, x0, x1), number=1)
+\end{lstlisting}
+
+The timeit function takes a lambda function that calls the Secant Method with the user-defined polynomial and initial guesses, and measures the execution time.
+
+We then print the root and execution time:
+
+\begin{lstlisting}[language=Python]
+root = secant(f, x0, x1)
+print("Root:", root)
+print("Execution time:", t, "seconds")
+\end{lstlisting}
+
+\section{Conclusion}
+
+In this document, we implemented the Secant Method in Python and used it to find the roots of a user-defined polynomial. We also measured the execution time of the algorithm using the timeit module.
+
+The Secant Method is a powerful root-finding algorithm that can be used to find the roots of any function. It is a useful tool
+
+\end{document}
